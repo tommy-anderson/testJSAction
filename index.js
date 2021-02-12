@@ -5,10 +5,6 @@ const checkBundleSize = dir => {
   const BUNDLE_BUDGET = parseInt(core.getInput('bundleBudget'))
   console.log(`Bundle budget is ${BUNDLE_BUDGET}`)
 
-  fs.readdirSync(testFolder).forEach(file => {
-    console.log(file);
-  });
-
   if (fs.existsSync(dir)) {
     const statsFile = fs.readFileSync(`${dir}/${getStatsFile(dir)}`);
     console.log(`try to read file at ${dir}/${getStatsFile(dir)}`)
@@ -65,10 +61,12 @@ try {
   console.log(`legacyBundlePath is ${legacyBundlePath}`)
 
   const modernResult = checkBundleSize(modernBundlePath);
-  console.log(`modernResult is ${{modernResult}}`)
   const legacyResult = checkBundleSize(legacyBundlePath);
-  console.log(`modernResult is ${{legacyResult}}`)
 
+  console.log(`modernResult passed ${modernResult.passed}`)
+  console.log(`modernResult difference ${modernResult.difference}`)
+  console.log(`legacyResult passed ${legacyResult.passed}`)
+  console.log(`legacyResult difference ${legacyResult.difference}`)
 
   core.setOutput("status", modernResult.passed && legacyResult.passed);
   if(!modernResult.passed && !legacyResult.passed){
@@ -76,12 +74,12 @@ try {
     core.setOutput('messsage',message)
     core.setFailed(message)
   }
-  if(!modernResult){
+  if(!modernResult.passed){
     const message = `You've exceeded modern bundle size budget by ${modernResult.difference}`
     core.setOutput('messsage',message)
     core.setFailed(message)
   }
-  if(!legacyResult){
+  if(!legacyResult.passed){
     const message = `You've exceeded modern bundle size budget by ${modernResult.difference}`
     core.setOutput('messsage',message)
     core.setFailed(message)
