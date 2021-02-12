@@ -4,6 +4,11 @@ const fs = require('fs');
 const checkBundleSize = dir => {
   const BUNDLE_BUDGET = parseInt(core.getInput('bundleBudget'))
   console.log(`Bundle budget is ${BUNDLE_BUDGET}`)
+
+  fs.readdirSync(testFolder).forEach(file => {
+    console.log(file);
+  });
+
   if (fs.existsSync(dir)) {
     const statsFile = fs.readFileSync(`${dir}/${getStatsFile(dir)}`);
     console.log(`try to read file at ${dir}/${getStatsFile(dir)}`)

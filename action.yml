@@ -11,7 +11,7 @@ inputs:
     description: 'Size budget for bundle in bytes'
     required: true
 outputs:
-  status: # id of output
+  status:
     description: 'Status of app bundle'
   message:
     description: 'Message to send further'
