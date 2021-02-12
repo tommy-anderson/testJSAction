@@ -74,17 +74,17 @@ try {
     core.setOutput('messsage',message)
     core.setFailed(message)
   }
-  if(!modernResult.passed){
+  else if(!modernResult.passed){
     const message = `You've exceeded modern bundle size budget by ${modernResult.difference}`
     core.setOutput('messsage',message)
     core.setFailed(message)
   }
-  if(!legacyResult.passed){
+  else if(!legacyResult.passed){
     const message = `You've exceeded legacy bundle size budget by ${legacyResult.difference}`
     core.setOutput('messsage',message)
     core.setFailed(message)
   }
-  if(modernResult.passed && legacyResult.passed){
+  else {
     const successMessage = `You haven\'t exceeded the bundle size budget, you still got ${modernResult.difference} of wiggle room`
     console.log(successMessage)
     core.setOutput('message',successMessage)
