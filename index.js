@@ -73,7 +73,7 @@ try {
   console.log(successMessage)
   core.setOutput('message',successMessage)
 } catch (error) {
-  core.setFailed(`Action failed with error ${err}`);
+  core.setFailed(`Action failed with error ${error}`);
 }
 
 
