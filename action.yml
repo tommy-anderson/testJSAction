@@ -1,13 +1,20 @@
-name: 'Hello World'
-description: 'Greet someone and record the time'
+name: 'BundleBudget'
+description: 'Check if bundle has exceeded allocated size budget'
 inputs:
-  who-to-greet:  # id of input
-    description: 'Who to greet'
+  appPath:
+    description: 'Path to the meteor app'
     required: true
-    default: 'World'
+  buildDir: 
+    description: :'build folder name'
+    required: true
+  bundleBudget:  
+    description: 'Size budget for bundle in bytes'
+    required: true
 outputs:
-  time: # id of output
-    description: 'The time we greeted you'
+  status: # id of output
+    description: 'Status of app bundle'
+  message:
+    description: 'Message to send further'
 runs:
   using: 'node12'
   main: 'index.js'
