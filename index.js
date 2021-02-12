@@ -2,7 +2,7 @@ const core = require('@actions/core');
 const fs = require('fs');
 
 const checkBundleSize = dir => {
-  const BUNDLE_BUDGET = core.getInput('bundleBudget')
+  const BUNDLE_BUDGET = parseInt(core.getInput('bundleBudget'))
   if (fs.existsSync(dir)) {
     const statsFile = fs.readFileSync(`${dir}/${getStatsFile(dir)}`);
     const bundlebytes = JSON.parse(statsFile).totalMinifiedBytes;
