@@ -86,7 +86,7 @@ try {
     core.setOutput('messsage',message)
     core.setFailed(message)
   }
-  const successMessage = 'You haven\'t exceeded the bundle size budget'
+  const successMessage = `You haven\'t exceeded the bundle size budget, you still got ${modernResult.difference} of wiggle room`
   console.log(successMessage)
   core.setOutput('message',successMessage)
 } catch (error) {
