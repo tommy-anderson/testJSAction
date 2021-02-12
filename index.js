@@ -3,14 +3,19 @@ const fs = require('fs');
 
 const checkBundleSize = dir => {
   const BUNDLE_BUDGET = parseInt(core.getInput('bundleBudget'))
+  console.log(`Bundle budget is ${BUNDLE_BUDGET}`)
   if (fs.existsSync(dir)) {
     const statsFile = fs.readFileSync(`${dir}/${getStatsFile(dir)}`);
+    console.log(`try to read file at ${dir}/${getStatsFile(dir)}`)
     const bundlebytes = JSON.parse(statsFile).totalMinifiedBytes;
     if (bundlebytes >= BUNDLE_BUDGET) {
       return { passed: false, difference: formatBytes(bundlebytes - BUNDLE_BUDGET) };
     } else {
       return { passed: true, difference: formatBytes(BUNDLE_BUDGET - bundlebytes) };
     }
+  }
+  else{
+    throw Error(`${dir} doesn't exist`)
   }
 };
 
@@ -51,8 +56,15 @@ try {
   const modernBundlePath = `${appPath}/${buildDir}/bundle/programs/web.browser`;
   const legacyBundlePath = `${appPath}/${buildDir}/bundle/programs/web.browser.legacy`;
 
+  console.log(`modernBundlePath is ${modernBundlePath}`)
+  console.log(`legacyBundlePath is ${legacyBundlePath}`)
+
   const modernResult = checkBundleSize(modernBundlePath);
+  console.log(`modernResult is ${{modernResult}}`)
   const legacyResult = checkBundleSize(legacyBundlePath);
+  console.log(`modernResult is ${{legacyResult}}`)
+
+
   core.setOutput("status", modernResult.passed && legacyResult.passed);
   if(!modernResult.passed && !legacyResult.passed){
     const message = `You've exceeded modern bundle size budget by ${modernResult.difference}, and legacy bundle size budget by ${legacyResult.difference}`
