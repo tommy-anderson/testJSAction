@@ -80,13 +80,16 @@ try {
     core.setFailed(message)
   }
   if(!legacyResult.passed){
-    const message = `You've exceeded modern bundle size budget by ${modernResult.difference}`
+    const message = `You've exceeded legacy bundle size budget by ${legacyResult.difference}`
     core.setOutput('messsage',message)
     core.setFailed(message)
   }
-  const successMessage = `You haven\'t exceeded the bundle size budget, you still got ${modernResult.difference} of wiggle room`
-  console.log(successMessage)
-  core.setOutput('message',successMessage)
+  if(modernResult.passed && legacyResult.passed){
+    const successMessage = `You haven\'t exceeded the bundle size budget, you still got ${modernResult.difference} of wiggle room`
+    console.log(successMessage)
+    core.setOutput('message',successMessage)
+  }
+  
 } catch (error) {
   core.setFailed(`Action failed with error ${error}`);
 }
