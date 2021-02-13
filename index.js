@@ -71,17 +71,17 @@ try {
   core.setOutput("status", modernResult.passed && legacyResult.passed);
   if(!modernResult.passed && !legacyResult.passed){
     const message = `You've exceeded modern bundle size budget by ${modernResult.difference}, and legacy bundle size budget by ${legacyResult.difference}`
-    core.setOutput('messsage',message)
+    core.setOutput('message',message)
     core.setFailed(message)
   }
   else if(!modernResult.passed){
     const message = `You've exceeded modern bundle size budget by ${modernResult.difference}`
-    core.setOutput('messsage',message)
+    core.setOutput('message',message)
     core.setFailed(message)
   }
   else if(!legacyResult.passed){
     const message = `You've exceeded legacy bundle size budget by ${legacyResult.difference}`
-    core.setOutput('messsage',message)
+    core.setOutput('message',message)
     core.setFailed(message)
   }
   else {
