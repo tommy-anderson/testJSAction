@@ -55,32 +55,17 @@ try {
   const appPath = core.getInput('appPath')
 
   const modernBundlePath = `${appPath}/${buildDir}/bundle/programs/web.browser`;
-  const legacyBundlePath = `${appPath}/${buildDir}/bundle/programs/web.browser.legacy`;
 
   console.log(`modernBundlePath is ${modernBundlePath}`)
-  console.log(`legacyBundlePath is ${legacyBundlePath}`)
 
   const modernResult = checkBundleSize(modernBundlePath);
-  const legacyResult = checkBundleSize(legacyBundlePath);
 
-  console.log(`modernResult passed ${modernResult.passed}`)
-  console.log(`modernResult difference ${modernResult.difference}`)
-  console.log(`legacyResult passed ${legacyResult.passed}`)
-  console.log(`legacyResult difference ${legacyResult.difference}`)
+  console.log(`passed -  ${modernResult.passed}`)
+  console.log(`difference - ${modernResult.difference}`)
 
-  core.setOutput("status", modernResult.passed && legacyResult.passed);
-  if(!modernResult.passed && !legacyResult.passed){
-    const message = `You've exceeded modern bundle size budget by ${modernResult.difference}, and legacy bundle size budget by ${legacyResult.difference}`
-    core.setOutput('message',message)
-    core.setFailed(message)
-  }
-  else if(!modernResult.passed){
-    const message = `You've exceeded modern bundle size budget by ${modernResult.difference}`
-    core.setOutput('message',message)
-    core.setFailed(message)
-  }
-  else if(!legacyResult.passed){
-    const message = `You've exceeded legacy bundle size budget by ${legacyResult.difference}`
+  core.setOutput("status", modernResult.passed);
+  if(!modernResult.passed){
+    const message = `You've exceeded bundle size budget by ${modernResult.difference}`
     core.setOutput('message',message)
     core.setFailed(message)
   }
